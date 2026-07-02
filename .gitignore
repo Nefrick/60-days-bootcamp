@@ -1,0 +1,37 @@
+# dependencies
+node_modules/
+
+# logs
+logs/
+*.log
+
+# env
+.env
+.env.local
+
+# build
+dist/
+build/
+
+# cache
+.cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# coverage
+coverage/
+
+# npm
+package-lock.json
+
+# yarn
+yarn.lock
+
+# pnpm
+pnpm-lock.yaml
