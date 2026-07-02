@@ -1,0 +1,11 @@
+{
+    "officeId" : 45,
+    "isOpen" : false,
+    "contact" : {
+        "phone" : "123-456-7890",
+        "email" : "john.doe@example.com",
+        "address" : {
+            "city" : "Anytown"
+        }
+    }
+}
