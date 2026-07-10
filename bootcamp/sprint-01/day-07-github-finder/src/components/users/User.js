@@ -1,17 +1,24 @@
-import React, { useEffect, Fragment } from 'react'
+import React, { useEffect, Fragment, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import Repos from '../repos/Repos'
 import Spinner from '../layout/Spinner'
-import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import GithubContext from '../../context/github/githubContext';
 
-const User = ({ getUser, getUserRepos, user, repos, loading }) => {
+const User = () => {
     const { login } = useParams();
+    const { 
+        user, 
+        repos, 
+        loading, 
+        getUser, 
+        getUserRepos 
+    } = useContext(GithubContext);
 
     useEffect(() => {
         getUser(login);
         getUserRepos(login);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line
     }, []);
 
     const {
@@ -30,6 +37,7 @@ const User = ({ getUser, getUserRepos, user, repos, loading }) => {
     } = user;
 
     if (loading) return <Spinner />;
+
     return <Fragment>
         <Link to='/' className='btn btn-light'>
             Back to Search
@@ -90,14 +98,6 @@ const User = ({ getUser, getUserRepos, user, repos, loading }) => {
         <Repos repos={repos} />
     </Fragment>
 }
-
-User.propTypes = {
-    getUser: PropTypes.func.isRequired,
-    getUserRepos: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
-    repos: PropTypes.array.isRequired,
-    loading: PropTypes.bool.isRequired
-};
 
 
 export default User;

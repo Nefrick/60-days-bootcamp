@@ -1,41 +1,35 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types';
-class Search extends Component {
-    state = {
-        text: ''
-    };
+import React, { useState, useContext } from 'react';
 
-    static propTypes = {
-        searchUsers: PropTypes.func.isRequired,
-        clearUsers: PropTypes.func.isRequired,
-        showClear: PropTypes.bool.isRequired,
-        setAlert: PropTypes.func.isRequired
-    };
+import GithubContext from '../../context/github/githubContext';
+import AlertContext from '../../context/alert/alertContext';
 
+const Search = () => {
 
-    onChange = e => this.setState({ [e.target.name]: e.target.value });
-    onSubmit = e => {
+    const { setAlert } = useContext(AlertContext);
+    const { searchUsers, clearUsers, users } = useContext(GithubContext);
+    const [text, setText] = useState('');
+
+    const onChange = e => setText(e.target.value);
+    const onSubmit = e => {
         e.preventDefault();
-        if (this.state.text === '') {
-            this.props.setAlert('Please enter something', 'light');
+        if (text === '') {
+          console.log('Please enter something');
+            setAlert('Please enter something', 'light');
         } else {
-            this.props.searchUsers(this.state.text);
-            this.setState({ text: '' });
+            searchUsers(text);
+            setText('');
         }
     };
 
-
-  render() {
-    const { showClear, clearUsers } = this.props;
     return (
       <div>
-        <form onSubmit={this.onSubmit} className="form">
+        <form onSubmit={onSubmit} className="form">
           <input
             type="text"
             name="text"
             placeholder="Search Users..."
-            value={this.state.text}
-            onChange={this.onChange}
+            value={text}
+            onChange={onChange}
           />
             <input
               type="submit"
@@ -43,7 +37,7 @@ class Search extends Component {
               className="btn btn-dark btn-block"
             />
         </form>
-        {showClear && (
+        {users.length > 0 && (
           <button onClick={clearUsers} 
           className="btn btn-light btn-block"
           >
@@ -53,6 +47,5 @@ class Search extends Component {
       </div>
     )
   }
-}
 
 export default Search
